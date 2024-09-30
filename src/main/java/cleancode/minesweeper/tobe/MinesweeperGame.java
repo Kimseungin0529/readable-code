@@ -7,7 +7,10 @@ public class MinesweeperGame {
     private static final int ROW_SIZE = 8;
     private static final int COLUM_SIZE = 10;
 
-    
+    private static final String FLAG = "⚑";
+    private static final String MINE = "☼";
+    private static final String CLOSED_CELL = "□";
+    private static final String OPEND_CELL = "■";
     
     private static String[][] board = new String[ROW_SIZE][COLUM_SIZE];
     private static Integer[][] landMineCounts = new Integer[ROW_SIZE][COLUM_SIZE];
@@ -38,11 +41,11 @@ public class MinesweeperGame {
             int seletedRowIndex = getSeletedRowIndex(inputCell);
 
             if (doesUserChooseToPlantFlag(userActionInputCell)) {
-                board[seletedRowIndex][seletedColIndex] = "⚑";
+                board[seletedRowIndex][seletedColIndex] = FLAG;
                 checkIfAllGameIsOver();
             } else if (doesUserChooseToOpenCell(userActionInputCell)) {
                 if (isLandMineCell(seletedRowIndex, seletedColIndex)) {
-                    board[seletedRowIndex][seletedColIndex] = "☼";
+                    board[seletedRowIndex][seletedColIndex] = MINE;
                     changeGameStatusToLose();
                     continue;
                 } else {
@@ -114,7 +117,7 @@ public class MinesweeperGame {
         boolean isOpenedAllCell = true;
         for (int row = 0; row < ROW_SIZE; row++) {
             for (int col = 0; col < COLUM_SIZE; col++) {
-                if (board[row][col].equals("□")) {
+                if (board[row][col].equals(CLOSED_CELL)) {
                     isOpenedAllCell = false;
                 }
             }
@@ -167,7 +170,7 @@ public class MinesweeperGame {
     private static void initializeGame() {
         for (int row = 0; row < ROW_SIZE; row++) {
             for (int col = 0; col < COLUM_SIZE; col++) {
-                board[row][col] = "□";
+                board[row][col] = CLOSED_CELL;
             }
         }
         for (int i = 0; i < 10; i++) {
@@ -221,7 +224,7 @@ public class MinesweeperGame {
         if (row < 0 || row >= ROW_SIZE || col < 0 || col >= COLUM_SIZE) {
             return;
         }
-        if (!board[row][col].equals("□")) {
+        if (!board[row][col].equals(CLOSED_CELL)) {
             return;
         }
         if (isLandMineCell(row, col)) {
@@ -231,7 +234,7 @@ public class MinesweeperGame {
             board[row][col] = String.valueOf(landMineCounts[row][col]);
             return;
         } else {
-            board[row][col] = "■";
+            board[row][col] = OPEND_CELL;
         }
         openAroundCell(row - 1, col - 1);
         openAroundCell(row - 1, col);
