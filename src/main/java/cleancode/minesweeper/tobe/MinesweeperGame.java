@@ -80,48 +80,48 @@ public class MinesweeperGame {
             System.out.println("선택할 좌표를 입력하세요. (예: a1)");
             String inputCell = scanner.nextLine();
             System.out.println("선택한 셀에 대한 행위를 선택하세요. (1: 오픈, 2: 깃발 꽂기)");
-            String actInputCell = scanner.nextLine();
-            char inputRowIndex = inputCell.charAt(0);
-            char inputColIndex = inputCell.charAt(1);
-            int seletedCol;
-            switch (inputRowIndex) {
+            String userActionInputCell = scanner.nextLine();
+            char inputCellRow = inputCell.charAt(0);
+            char inputCellCol = inputCell.charAt(1);
+            int seletedColIndex;
+            switch (inputCellRow) {
                 case 'a':
-                    seletedCol = 0;
+                    seletedColIndex = 0;
                     break;
                 case 'b':
-                    seletedCol = 1;
+                    seletedColIndex = 1;
                     break;
                 case 'c':
-                    seletedCol = 2;
+                    seletedColIndex = 2;
                     break;
                 case 'd':
-                    seletedCol = 3;
+                    seletedColIndex = 3;
                     break;
                 case 'e':
-                    seletedCol = 4;
+                    seletedColIndex = 4;
                     break;
                 case 'f':
-                    seletedCol = 5;
+                    seletedColIndex = 5;
                     break;
                 case 'g':
-                    seletedCol = 6;
+                    seletedColIndex = 6;
                     break;
                 case 'h':
-                    seletedCol = 7;
+                    seletedColIndex = 7;
                     break;
                 case 'i':
-                    seletedCol = 8;
+                    seletedColIndex = 8;
                     break;
                 case 'j':
-                    seletedCol = 9;
+                    seletedColIndex = 9;
                     break;
                 default:
-                    seletedCol = -1;
+                    seletedColIndex = -1;
                     break;
             }
-            int seletedRow = Character.getNumericValue(inputColIndex) - 1;
-            if (actInputCell.equals("2")) {
-                board[seletedRow][seletedCol] = "⚑";
+            int seletedRowIndex = Character.getNumericValue(inputCellCol) - 1;
+            if (userActionInputCell.equals("2")) {
+                board[seletedRowIndex][seletedColIndex] = "⚑";
                 boolean isOpenedAllCell = true;
                 for (int row = 0; row < 8; row++) {
                     for (int col = 0; col < 10; col++) {
@@ -133,13 +133,13 @@ public class MinesweeperGame {
                 if (isOpenedAllCell) {
                     gameStatus = 1;
                 }
-            } else if (actInputCell.equals("1")) {
-                if (landMines[seletedRow][seletedCol]) {
-                    board[seletedRow][seletedCol] = "☼";
+            } else if (userActionInputCell.equals("1")) {
+                if (landMines[seletedRowIndex][seletedColIndex]) {
+                    board[seletedRowIndex][seletedColIndex] = "☼";
                     gameStatus = -1;
                     continue;
                 } else {
-                    openAroundCell(seletedRow, seletedCol);
+                    openAroundCell(seletedRowIndex, seletedColIndex);
                 }
                 boolean isOpenedAllCell = true;
                 for (int i = 0; i < 8; i++) {
