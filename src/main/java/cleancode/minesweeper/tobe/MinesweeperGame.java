@@ -1,5 +1,6 @@
 package cleancode.minesweeper.tobe;
 
+import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -114,16 +115,11 @@ public class MinesweeperGame {
         gameStatus = 1;
     }
 
+
     private static boolean isOpenedAllCell() {
-        boolean isOpenedAllCell = true;
-        for (int row = 0; row < BOARD_ROW_SIZE; row++) {
-            for (int col = 0; col < BOARD_COLUM_SIZE; col++) {
-                if (BOARD[row][col].equals(CLOSED_CELL)) {
-                    isOpenedAllCell = false;
-                }
-            }
-        }
-        return isOpenedAllCell;
+        return Arrays.stream(BOARD)
+                .flatMap(stringArray -> Arrays.stream(stringArray))
+                .noneMatch(cell -> cell.equals(CLOSED_CELL));
     }
 
     private static int convertRowFrom(char inputCellRow) {
