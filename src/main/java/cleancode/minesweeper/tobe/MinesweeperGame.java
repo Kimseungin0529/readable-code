@@ -4,6 +4,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class MinesweeperGame {
+    private static final Scanner SCANNER = new Scanner(System.in);
     private static final int BOARD_ROW_SIZE = 8;
     private static final int BOARD_COLUM_SIZE = 10;
     private static final String FLAG = "⚑";
@@ -22,7 +23,6 @@ public class MinesweeperGame {
 
     public static void main(String[] args) {
         showGameStart();
-        Scanner scanner = new Scanner(System.in);
         initializeGame();
         while (true) {
             showCurrentBoard();
@@ -35,8 +35,8 @@ public class MinesweeperGame {
                 break;
             }
             System.out.println();
-            String inputCell = getInputCellFromUser(scanner);
-            String userActionInputCell = getUserActionInputCellFromUser(scanner);
+            String inputCell = getInputCellFromUser();
+            String userActionInputCell = getUserActionInputCellFromUser();
             int seletedColIndex = getSeletedColIndex(inputCell);
             int seletedRowIndex = getSeletedRowIndex(inputCell);
 
@@ -85,14 +85,14 @@ public class MinesweeperGame {
         return convertColFrom(inputCellCol);
     }
 
-    private static String getUserActionInputCellFromUser(Scanner scanner) {
+    private static String getUserActionInputCellFromUser() {
         System.out.println("선택한 셀에 대한 행위를 선택하세요. (1: 오픈, 2: 깃발 꽂기)");
-        return scanner.nextLine();
+        return SCANNER.nextLine();
     }
 
-    private static String getInputCellFromUser(Scanner scanner) {
+    private static String getInputCellFromUser() {
         System.out.println("선택할 좌표를 입력하세요. (예: a1)");
-        return scanner.nextLine();
+        return SCANNER.nextLine();
     }
 
     private static boolean doesUserLoswTheGame() {
