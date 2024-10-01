@@ -1,7 +1,7 @@
 package cleancode.minesweeper.tobe;
 
 public class Test {
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         for(int i=0; i<20; i++){
             doSomethingWithI(i);
         }
@@ -17,5 +17,5 @@ public class Test {
         if(i >15 && j >20){
             doSomething();
         }
-    }
+    }*/
 }
