@@ -5,102 +5,104 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class MinesweeperGame {
-    private static final Scanner SCANNER = new Scanner(System.in);
-    private static final int BOARD_ROW_SIZE = 8;
-    private static final int BOARD_COLUM_SIZE = 10;
-    private static final String FLAG = "⚑";
-    private static final String MINE = "☼";
-    private static final String CLOSED_CELL = "□";
-    private static final String OPEND_CELL = "■";
-    private static final String[][] BOARD = new String[BOARD_ROW_SIZE][BOARD_COLUM_SIZE];
-    private static final Integer[][] NEARBY_LAND_MINE_COUNTS = new Integer[BOARD_ROW_SIZE][BOARD_COLUM_SIZE];
-    private static final boolean[][] LAND_MINES = new boolean[BOARD_ROW_SIZE][BOARD_COLUM_SIZE];
 
+    public static final int BOARD_ROW_SIZE = 8;
+    public static final int BOARD_COL_SIZE = 10;
+    public static final Scanner SCANNER = new Scanner(System.in);
+    private static final Cell[][] BOARD = new Cell[BOARD_ROW_SIZE][BOARD_COL_SIZE];
+    public static final int LAND_MINE_COUNT = 10;
 
     private static int gameStatus = 0; // 0: 게임 중, 1: 승리, -1: 패배
 
-    
-    
-
     public static void main(String[] args) {
-        showGameStart();
+        showGameStartComments();
         initializeGame();
 
         while (true) {
-            showCurrentBoard();
+            try {
+                showBoard();
 
-            if (doesUserWinTheGame()) {
-                System.out.println("지뢰를 모두 찾았습니다. GAME CLEAR!");
-                break;
+                if (doesUserWinTheGame()) {
+                    System.out.println("지뢰를 모두 찾았습니다. GAME CLEAR!");
+                    break;
+                }
+                if (doesUserLoseTheGame()) {
+                    System.out.println("지뢰를 밟았습니다. GAME OVER!");
+                    break;
+                }
+
+                String cellInput = getCellInputFromUser();
+                String userActionInput = getUserActionInputFromUser();
+                actOnCell(cellInput, userActionInput);
+            } catch (AppException e) {
+                System.out.println(e.getMessage());
+            } catch (Exception e) {
+                System.out.println("프로그램에 문제가 생겼습니다.");
             }
-            if (doesUserLoswTheGame()) {
-                System.out.println("지뢰를 밟았습니다. GAME OVER!");
-                break;
-            }
-            System.out.println();
+        }
+    }
 
-            String inputCell = getInputCellFromUser();
-            String userActionInputCell = getUserActionInputCellFromUser();
-            int seletedColIndex = getSeletedColIndex(inputCell);
-            int seletedRowIndex = getSeletedRowIndex(inputCell);
+    private static void actOnCell(String cellInput, String userActionInput) {
+        int selectedColIndex = getSelectedColIndex(cellInput);
+        int selectedRowIndex = getSelectedRowIndex(cellInput);
 
-            if (doesUserChooseToPlantFlag(userActionInputCell)) {
-                BOARD[seletedRowIndex][seletedColIndex] = FLAG;
-                checkIfAllGameIsOver();
+        if (doesUserChooseToPlantFlag(userActionInput)) {
+            BOARD[selectedRowIndex][selectedColIndex].flag();
+            checkIfGameIsOver();
+            return;
+        }
+
+        if (doesUserChooseToOpenCell(userActionInput)) {
+            if (isLandMineCell(selectedRowIndex, selectedColIndex)) {
+                BOARD[selectedRowIndex][selectedColIndex].open();
+                changeGameStatusToLose();
                 return;
             }
 
-            if (doesUserChooseToOpenCell(userActionInputCell)) {
-                if (isLandMineCell(seletedRowIndex, seletedColIndex)) {
-                    BOARD[seletedRowIndex][seletedColIndex] = MINE;
-                    changeGameStatusToLose();
-                    continue;
-                }
-                openAroundCell(seletedRowIndex, seletedColIndex);
-                checkIfAllGameIsOver();
-                continue;
-            }
-            throw new AppException("잘못된 번호를 선택하셨습니다.");
+            open(selectedRowIndex, selectedColIndex);
+            checkIfGameIsOver();
+            return;
         }
+        throw new AppException("잘못된 번호를 선택하셨습니다.");
     }
 
     private static void changeGameStatusToLose() {
         gameStatus = -1;
     }
 
-    private static boolean isLandMineCell(int seletedRowIndex, int seletedColIndex) {
-        return LAND_MINES[seletedRowIndex][seletedColIndex];
+    private static boolean isLandMineCell(int selectedRowIndex, int selectedColIndex) {
+        return BOARD[selectedRowIndex][selectedColIndex].isLandMine();
     }
 
-    private static boolean doesUserChooseToOpenCell(String userActionInputCell) {
-        return userActionInputCell.equals("1");
+    private static boolean doesUserChooseToOpenCell(String userActionInput) {
+        return userActionInput.equals("1");
     }
 
-    private static boolean doesUserChooseToPlantFlag(String userActionInputCell) {
-        return userActionInputCell.equals("2");
+    private static boolean doesUserChooseToPlantFlag(String userActionInput) {
+        return userActionInput.equals("2");
     }
 
-    private static int getSeletedRowIndex(String inputCell) {
-        char inputCellRow = inputCell.charAt(1);
-        return convertRowFrom(inputCellRow);
+    private static int getSelectedRowIndex(String cellInput) {
+        char cellInputRow = cellInput.charAt(1);
+        return convertRowFrom(cellInputRow);
     }
 
-    private static int getSeletedColIndex(String inputCell) {
-        char inputCellCol = inputCell.charAt(0);
-        return convertColFrom(inputCellCol);
+    private static int getSelectedColIndex(String cellInput) {
+        char cellInputCol = cellInput.charAt(0);
+        return convertColFrom(cellInputCol);
     }
 
-    private static String getUserActionInputCellFromUser() {
+    private static String getUserActionInputFromUser() {
         System.out.println("선택한 셀에 대한 행위를 선택하세요. (1: 오픈, 2: 깃발 꽂기)");
         return SCANNER.nextLine();
     }
 
-    private static String getInputCellFromUser() {
+    private static String getCellInputFromUser() {
         System.out.println("선택할 좌표를 입력하세요. (예: a1)");
         return SCANNER.nextLine();
     }
 
-    private static boolean doesUserLoswTheGame() {
+    private static boolean doesUserLoseTheGame() {
         return gameStatus == -1;
     }
 
@@ -108,9 +110,9 @@ public class MinesweeperGame {
         return gameStatus == 1;
     }
 
-    private static void checkIfAllGameIsOver() {
-        boolean isOpenedAll = isOpenedAllCell();
-        if (isOpenedAll) {
+    private static void checkIfGameIsOver() {
+        boolean isAllChecked = isAllCellChecked();
+        if (isAllChecked) {
             changeGameStatusToWin();
         }
     }
@@ -119,23 +121,23 @@ public class MinesweeperGame {
         gameStatus = 1;
     }
 
-
-    private static boolean isOpenedAllCell() {
+    private static boolean isAllCellChecked() {
         return Arrays.stream(BOARD)
-                .flatMap(stringArray -> Arrays.stream(stringArray))
-                .noneMatch(cell -> CLOSED_CELL.equals(cell));
+                .flatMap(Arrays::stream)
+                .allMatch(Cell::isChecked);
     }
 
-    private static int convertRowFrom(char inputCellRow) {
-        int rowIndex = Character.getNumericValue(inputCellRow) - 1;
-        if(rowIndex >= BOARD_ROW_SIZE){
-            throw new AppException("해당 row 값은 보드 범위에 존재하지 않는 값입니다.");
+    private static int convertRowFrom(char cellInputRow) {
+        int rowIndex = Character.getNumericValue(cellInputRow) - 1;
+        if (rowIndex >= BOARD_ROW_SIZE) {
+            throw new AppException("잘못된 입력입니다.");
         }
+
         return rowIndex;
     }
 
-    private static int convertColFrom(char inputCellRow) {
-        switch (inputCellRow) {
+    private static int convertColFrom(char cellInputCol) {
+        switch (cellInputCol) {
             case 'a':
                 return 0;
             case 'b':
@@ -157,110 +159,106 @@ public class MinesweeperGame {
             case 'j':
                 return 9;
             default:
-                throw new AppException("해당 colum 값은 보드 범위에 존재하지 않는 값입니다.");
+                throw new AppException("잘못된 입력입니다.");
         }
     }
 
-    private static void showCurrentBoard() {
+    private static void showBoard() {
         System.out.println("   a b c d e f g h i j");
         for (int row = 0; row < BOARD_ROW_SIZE; row++) {
             System.out.printf("%d  ", row + 1);
-            for (int col = 0; col < BOARD_COLUM_SIZE; col++) {
-                System.out.print(BOARD[row][col] + " ");
+            for (int col = 0; col < BOARD_COL_SIZE; col++) {
+                System.out.print(BOARD[row][col].getSign() + " ");
             }
             System.out.println();
         }
+        System.out.println();
     }
 
     private static void initializeGame() {
         for (int row = 0; row < BOARD_ROW_SIZE; row++) {
-            for (int col = 0; col < BOARD_COLUM_SIZE; col++) {
-                BOARD[row][col] = CLOSED_CELL;
+            for (int col = 0; col < BOARD_COL_SIZE; col++) {
+                BOARD[row][col] = Cell.create();
             }
         }
 
-        for (int i = 0; i < 10; i++) {
-            int col = new Random().nextInt(BOARD_COLUM_SIZE);
+        for (int i = 0; i < LAND_MINE_COUNT; i++) {
+            int col = new Random().nextInt(BOARD_COL_SIZE);
             int row = new Random().nextInt(BOARD_ROW_SIZE);
-            LAND_MINES[row][col] = true;
+            BOARD[row][col].turnOnLandMine();
         }
 
         for (int row = 0; row < BOARD_ROW_SIZE; row++) {
-            for (int col = 0; col < BOARD_COLUM_SIZE; col++) {
+            for (int col = 0; col < BOARD_COL_SIZE; col++) {
                 if (isLandMineCell(row, col)) {
-                    NEARBY_LAND_MINE_COUNTS[row][col] = 0;
                     continue;
                 }
-
-                int count = countNearByLandMines(row, col);
-                NEARBY_LAND_MINE_COUNTS[row][col] = count;
+                int count = countNearbyLandMines(row, col);
+                BOARD[row][col].updateNearbyLandMineCount(count);
             }
         }
     }
 
-    private static int countNearByLandMines(int row, int col) {
+    private static int countNearbyLandMines(int row, int col) {
         int count = 0;
-        if (row - 1 >= 0 && col - 1 >= 0 && isLandMineCell(row -1, col -1)) {
+        if (row - 1 >= 0 && col - 1 >= 0 && isLandMineCell(row - 1, col - 1)) {
             count++;
         }
-        if (row - 1 >= 0 && isLandMineCell(row -1, col)) {
+        if (row - 1 >= 0 && isLandMineCell(row - 1, col)) {
             count++;
         }
-        if (row - 1 >= 0 && col + 1 < BOARD_COLUM_SIZE && isLandMineCell(row -1, col +1)) {
+        if (row - 1 >= 0 && col + 1 < BOARD_COL_SIZE && isLandMineCell(row - 1, col + 1)) {
             count++;
         }
-        if (col - 1 >= 0 && isLandMineCell(row, col -1)) {
+        if (col - 1 >= 0 && isLandMineCell(row, col - 1)) {
             count++;
         }
-        if (col + 1 < BOARD_COLUM_SIZE && isLandMineCell(row, col +1)) {
+        if (col + 1 < BOARD_COL_SIZE && isLandMineCell(row, col + 1)) {
             count++;
         }
-        if (row + 1 < BOARD_ROW_SIZE && col - 1 >= 0 && isLandMineCell(row +1, col -1)) {
+        if (row + 1 < BOARD_ROW_SIZE && col - 1 >= 0 && isLandMineCell(row + 1, col - 1)) {
             count++;
         }
-        if (row + 1 < BOARD_ROW_SIZE && isLandMineCell(row +1, col)) {
+        if (row + 1 < BOARD_ROW_SIZE && isLandMineCell(row + 1, col)) {
             count++;
         }
-        if (row + 1 < BOARD_ROW_SIZE && col + 1 < BOARD_COLUM_SIZE && isLandMineCell(row +1, col +1)) {
+        if (row + 1 < BOARD_ROW_SIZE && col + 1 < BOARD_COL_SIZE && isLandMineCell(row + 1, col + 1)) {
             count++;
         }
         return count;
     }
 
-    private static void showGameStart() {
+    private static void showGameStartComments() {
         System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         System.out.println("지뢰찾기 게임 시작!");
         System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
     }
 
-    private static void openAroundCell(int row, int col) {
-        if (row < 0 || row >= BOARD_ROW_SIZE || col < 0 || col >= BOARD_COLUM_SIZE) {
+    private static void open(int row, int col) {
+        if (row < 0 || row >= BOARD_ROW_SIZE || col < 0 || col >= BOARD_COL_SIZE) {
             return;
         }
-        if (BOARD[row][col].equals(OPEND_CELL)) {
+        if (BOARD[row][col].isOpened()) {
             return;
         }
         if (isLandMineCell(row, col)) {
             return;
         }
-        if (isThereMindCellAround(row, col)) {
-            BOARD[row][col] = String.valueOf(NEARBY_LAND_MINE_COUNTS[row][col]);
-            return;
-        } else {
-            BOARD[row][col] = OPEND_CELL;
-        }
-        openAroundCell(row - 1, col - 1);
-        openAroundCell(row - 1, col);
-        openAroundCell(row - 1, col + 1);
-        openAroundCell(row, col - 1);
-        openAroundCell(row, col + 1);
-        openAroundCell(row + 1, col - 1);
-        openAroundCell(row + 1, col);
-        openAroundCell(row + 1, col + 1);
-    }
 
-    private static boolean isThereMindCellAround(int row, int col) {
-        return NEARBY_LAND_MINE_COUNTS[row][col] != 0;
+        BOARD[row][col].open();
+
+        if (BOARD[row][col].hasLandMineCount()) {
+            return;
+        }
+
+        open(row - 1, col - 1);
+        open(row - 1, col);
+        open(row - 1, col + 1);
+        open(row, col - 1);
+        open(row, col + 1);
+        open(row + 1, col - 1);
+        open(row + 1, col);
+        open(row + 1, col + 1);
     }
 
 }
