@@ -1,9 +1,10 @@
 package cleancode.minesweeper.tobe.io;
 
+import cleancode.minesweeper.tobe.GameBoard;
 import cleancode.minesweeper.tobe.GameException;
-import cleancode.minesweeper.tobe.Cell;
 
 public class ConsoleOutputHandler {
+
 
     public void showGameStartComments() {
         System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
@@ -11,27 +12,27 @@ public class ConsoleOutputHandler {
         System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
     }
 
-    public void showBoard(Cell[][] board) {
+    public void showBoard(GameBoard board) {
         System.out.println("   a b c d e f g h i j");
-        for (int row = 0; row < board.length; row++) {
+        for (int row = 0; row < board.getRowSize(); row++) {
             System.out.printf("%d  ", row + 1);
-            for (int col = 0; col < board[0].length; col++) {
-                System.out.print(board[row][col].getSign() + " ");
+            for (int col = 0; col < board.getColSize(); col++) {
+                System.out.print(board.getSign(row, col) + " ");
             }
             System.out.println();
         }
         System.out.println();
     }
 
-    public void printGameWinComment() {
+    public void printGameWinningComment() {
         System.out.println("지뢰를 모두 찾았습니다. GAME CLEAR!");
     }
 
-    public void printGameLoseComment() {
+    public void printGameLosingComment() {
         System.out.println("지뢰를 밟았습니다. GAME OVER!");
     }
 
-    public void printCommentForSelectedCell() {
+    public void printCommentForSelectingCell() {
         System.out.println("선택할 좌표를 입력하세요. (예: a1)");
     }
 
@@ -42,9 +43,8 @@ public class ConsoleOutputHandler {
     public void printExceptionMessage(GameException e) {
         System.out.println(e.getMessage());
     }
+
     public void printSimpleMessage(String message) {
         System.out.println(message);
     }
-
-    ;
 }
