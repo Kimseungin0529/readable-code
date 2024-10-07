@@ -5,8 +5,11 @@ import cleancode.minesweeper.tobe.position.CellPosition;
 
 import java.util.Scanner;
 
-public class ConsoleInputHandler implements InputHandler{
-    private static final Scanner SCANNER = new Scanner(System.in);
+
+public class ConsoleInputHandler implements InputHandler {
+
+    public static final Scanner SCANNER = new Scanner(System.in);
+
     private final BoardIndexConverter boardIndexConverter = new BoardIndexConverter();
 
     @Override
@@ -15,10 +18,12 @@ public class ConsoleInputHandler implements InputHandler{
     }
 
     @Override
-    public CellPosition getUserCellPositionInput() {
+    public CellPosition getCellPositionFromUser() {
         String userInput = SCANNER.nextLine();
-        int selectedColIndex = boardIndexConverter.getSelectedColIndex(userInput);
-        int selectedRowIndex = boardIndexConverter.getSelectedRowIndex(userInput);
-        return CellPosition.of(selectedRowIndex, selectedColIndex);
+
+        int colIndex = boardIndexConverter.getSelectedColIndex(userInput);
+        int rowIndex = boardIndexConverter.getSelectedRowIndex(userInput);
+        return CellPosition.of(rowIndex, colIndex);
     }
 }
+

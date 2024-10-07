@@ -5,6 +5,7 @@ import cleancode.minesweeper.tobe.position.CellPosition;
 public interface InputHandler {
 
     String getUserInput();
-    CellPosition getUserCellPositionInput();
+
+    CellPosition getCellPositionFromUser();
 
 }
