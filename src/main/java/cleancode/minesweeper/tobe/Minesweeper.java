@@ -31,11 +31,11 @@ public class Minesweeper implements GameInitializable, GameRunnable {
                 consoleOutputHandler.showBoard(gameBoard);
 
                 if (doesUserWinTheGame()) {
-                    consoleOutputHandler.printGameWinningComment();
+                    consoleOutputHandler.showGameWinningComment();
                     break;
                 }
                 if (doesUserLoseTheGame()) {
-                    consoleOutputHandler.printGameLosingComment();
+                    consoleOutputHandler.showGameLosingComment();
                     break;
                 }
 
@@ -43,9 +43,9 @@ public class Minesweeper implements GameInitializable, GameRunnable {
                 String userActionInput = getUserActionInputFromUser();
                 actOnCell(cellInput, userActionInput);
             } catch (GameException e) {
-                consoleOutputHandler.printExceptionMessage(e);
+                consoleOutputHandler.showExceptionMessage(e);
             } catch (Exception e) {
-                consoleOutputHandler.printSimpleMessage("프로그램에 문제가 생겼습니다.");
+                consoleOutputHandler.showSimpleMessage("프로그램에 문제가 생겼습니다.");
             }
         }
     }
@@ -54,7 +54,7 @@ public class Minesweeper implements GameInitializable, GameRunnable {
         int selectedColIndex = boardIndexConverter.getSelectedColIndex(cellInput, gameBoard.getColSize());
         int selectedRowIndex = boardIndexConverter.getSelectedRowIndex(cellInput, gameBoard.getRowSize());
 
-        if (doesUserChooseToPlantFlag(userActionInput)) {
+        if (doesUserChooseToPlantFlag( userActionInput)) {
             gameBoard.flag(selectedRowIndex, selectedColIndex);
             checkIfGameIsOver();
             return;
@@ -87,12 +87,12 @@ public class Minesweeper implements GameInitializable, GameRunnable {
     }
 
     private String getUserActionInputFromUser() {
-        consoleOutputHandler.printCommentForUserAction();
+        consoleOutputHandler.showCommentForUserAction();
         return consoleInputHandler.getUserInput();
     }
 
     private String getCellInputFromUser() {
-        consoleOutputHandler.printCommentForSelectingCell();
+        consoleOutputHandler.showCommentForSelectingCell();
         return consoleInputHandler.getUserInput();
     }
 
