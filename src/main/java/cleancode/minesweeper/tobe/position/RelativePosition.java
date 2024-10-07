@@ -29,6 +29,14 @@ public class RelativePosition {
         return new RelativePosition(deltaRow, deltaCol);
     }
 
+    public int getDeltaRow() {
+        return deltaRow;
+    }
+
+    public int getDeltaCol() {
+        return deltaCol;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -40,14 +48,6 @@ public class RelativePosition {
     @Override
     public int hashCode() {
         return Objects.hash(deltaRow, deltaCol);
-    }
-
-    public int getDeltaRow() {
-        return deltaRow;
-    }
-
-    public int getDeltaCol() {
-        return deltaCol;
     }
 
 }

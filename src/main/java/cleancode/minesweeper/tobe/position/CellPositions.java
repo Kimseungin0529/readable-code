@@ -48,12 +48,12 @@ public class CellPositions {
                 .toList();
     }
 
-    private boolean doesNotContain(CellPosition position) {
-        return !positions.contains(position);
-    }
-
     public List<CellPosition> getPositions() {
         return new ArrayList<>(positions);
+    }
+
+    private boolean doesNotContain(CellPosition position) {
+        return !positions.contains(position);
     }
 
 }

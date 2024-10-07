@@ -19,35 +19,6 @@ public class CellPosition {
         return new CellPosition(rowIndex, colIndex);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        CellPosition that = (CellPosition) o;
-        return rowIndex == that.rowIndex && colIndex == that.colIndex;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(rowIndex, colIndex);
-    }
-
-    public boolean isRowIndexMoreThanOrEqual(int rowIndex) {
-        return this.rowIndex >= rowIndex;
-    }
-
-    public boolean isColIndexMoreThanOrEqual(int colIndex) {
-        return this.colIndex >= colIndex;
-    }
-
-    public int getRowIndex() {
-        return rowIndex;
-    }
-
-    public int getColIndex() {
-        return colIndex;
-    }
-
     public boolean canCalculatePositionBy(RelativePosition relativePosition) {
         return this.rowIndex + relativePosition.getDeltaRow() >= 0
                 && this.colIndex + relativePosition.getDeltaCol() >= 0;
@@ -69,6 +40,35 @@ public class CellPosition {
 
     public boolean isColIndexLessThan(int colIndex) {
         return this.colIndex < colIndex;
+    }
+
+    public boolean isRowIndexMoreThanOrEqual(int rowIndex) {
+        return this.rowIndex >= rowIndex;
+    }
+
+    public boolean isColIndexMoreThanOrEqual(int colIndex) {
+        return this.colIndex >= colIndex;
+    }
+
+    public int getRowIndex() {
+        return rowIndex;
+    }
+
+    public int getColIndex() {
+        return colIndex;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CellPosition that = (CellPosition) o;
+        return rowIndex == that.rowIndex && colIndex == that.colIndex;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(rowIndex, colIndex);
     }
 
 }
