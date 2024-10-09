@@ -4,13 +4,22 @@ import cleancode.studycafe.me.exception.AppException;
 import cleancode.studycafe.me.io.InputHandler;
 import cleancode.studycafe.me.io.OutputHandler;
 import cleancode.studycafe.me.io.StudyCafeFileHandler;
+import cleancode.studycafe.me.model.StudyCafeLockerPass;
+import cleancode.studycafe.me.model.StudyCafePass;
+import cleancode.studycafe.me.model.StudyCafePassType;
+import cleancode.studycafe.me.config.StudyCafeConfig;
 
 import java.util.List;
 
 public class StudyCafePassMachine {
 
-    private final InputHandler inputHandler = new InputHandler();
-    private final OutputHandler outputHandler = new OutputHandler();
+    private final InputHandler inputHandler;
+    private final OutputHandler outputHandler;
+
+    public StudyCafePassMachine(StudyCafeConfig config) {
+        this.inputHandler = config.getInputHandler();
+        this.outputHandler = config.getOutputHandler();
+    }
 
     public void run() {
         try {
