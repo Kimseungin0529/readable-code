@@ -1,8 +1,8 @@
-package cleancode.studycafe.me.io;
+package cleancode.studycafe.me.studycafe.io;
 
-import cleancode.studycafe.me.model.StudyCafePass;
-import cleancode.studycafe.me.model.StudyCafePassType;
-import cleancode.studycafe.me.exception.AppException;
+import cleancode.studycafe.me.studycafe.model.StudyCafePass;
+import cleancode.studycafe.me.studycafe.model.StudyCafePassType;
+import cleancode.studycafe.me.studycafe.exception.AppException;
 
 import java.util.List;
 import java.util.Scanner;

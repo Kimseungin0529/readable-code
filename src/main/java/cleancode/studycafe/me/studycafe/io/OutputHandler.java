@@ -1,7 +1,7 @@
-package cleancode.studycafe.me.io;
+package cleancode.studycafe.me.studycafe.io;
 
-import cleancode.studycafe.me.model.StudyCafeLockerPass;
-import cleancode.studycafe.me.model.StudyCafePass;
+import cleancode.studycafe.me.studycafe.model.StudyCafeLockerPass;
+import cleancode.studycafe.me.studycafe.model.StudyCafePass;
 
 import java.util.List;
 
@@ -46,16 +46,17 @@ public class OutputHandler {
         System.out.println();
         System.out.println("이용 내역");
         System.out.println("이용권: " + selectedPass.display());
-        if (lockerPass != null) {
+        if (lockerPass != null) { // TODO: 2024-10-09  null을 다루는 것 자체가 옳을까? 감각적으로 좋지 않아 보인다. 
             System.out.println("사물함: " + lockerPass.display());
         }
 
+        // TODO: 2024-10-09 추상화 단계에서 이런 계산 로직이 출력문들과 일치할까? 메서드로 추출하는 게 좋을까? 
         double discountRate = selectedPass.getDiscountRate();
         int discountPrice = (int) (selectedPass.getPrice() * discountRate);
         if (discountPrice > 0) {
             System.out.println("이벤트 할인 금액: " + discountPrice + "원");
         }
-
+        // TODO: 2024-10-09 위 처럼 계산 로직에 대한 처리를 추상황해야 한다면 이러한 연산 과정도 추상화하는 게 가독성 좋지 않을까? 
         int totalPrice = selectedPass.getPrice() - discountPrice + (lockerPass != null ? lockerPass.getPrice() : 0);
         System.out.println("총 결제 금액: " + totalPrice + "원");
         System.out.println();

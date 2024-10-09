@@ -1,14 +1,14 @@
-package cleancode.studycafe.asis.io;
+package cleancode.studycafe.me.studycafe.io;
+
+import cleancode.studycafe.me.studycafe.model.StudyCafeLockerPass;
+import cleancode.studycafe.me.studycafe.model.StudyCafePass;
+import cleancode.studycafe.me.studycafe.model.StudyCafePassType;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-
-import cleancode.studycafe.asis.model.StudyCafeLockerPass;
-import cleancode.studycafe.asis.model.StudyCafePass;
-import cleancode.studycafe.asis.model.StudyCafePassType;
 
 public class StudyCafeFileHandler {
 

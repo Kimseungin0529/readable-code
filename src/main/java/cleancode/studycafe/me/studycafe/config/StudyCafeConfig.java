@@ -1,7 +1,7 @@
-package cleancode.studycafe.me.config;
+package cleancode.studycafe.me.studycafe.config;
 
-import cleancode.studycafe.me.io.InputHandler;
-import cleancode.studycafe.me.io.OutputHandler;
+import cleancode.studycafe.me.studycafe.io.InputHandler;
+import cleancode.studycafe.me.studycafe.io.OutputHandler;
 
 public class StudyCafeConfig {
     private final InputHandler inputHandler;

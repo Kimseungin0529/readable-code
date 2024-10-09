@@ -7,7 +7,7 @@ import cleancode.minesweeper.tobe.minesweeper.io.ConsoleOutputHandler;
 import cleancode.minesweeper.tobe.minesweeper.Minesweeper;
 
 public class GameApplication {
-
+/*
 
     public static void main(String[] args) {
         GameConfig gameConfig = new GameConfig(
@@ -17,7 +17,7 @@ public class GameApplication {
         );
         Minesweeper minesweeper = new Minesweeper(gameConfig);
         minesweeper.run();
-    }
+    }*/
 
 
 

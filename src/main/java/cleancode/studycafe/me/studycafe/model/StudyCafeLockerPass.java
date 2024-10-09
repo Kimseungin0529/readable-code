@@ -1,4 +1,4 @@
-package cleancode.studycafe.me.model;
+package cleancode.studycafe.me.studycafe.model;
 
 public class StudyCafeLockerPass {
 
@@ -29,6 +29,7 @@ public class StudyCafeLockerPass {
     }
 
     public String display() {
+        // TODO: 2024-10-09  여러 if 문에 대해 고민해보기 -> 가독성은 괜찮은가? passType의 직접적인 변경이 일어나거나 개수에 대한 매우 큰 병동이 있다면?
         if (passType == StudyCafePassType.HOURLY) {
             return String.format("%s시간권 - %d원", duration, price);
         }

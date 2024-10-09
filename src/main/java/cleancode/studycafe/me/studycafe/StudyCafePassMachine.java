@@ -1,19 +1,25 @@
-package cleancode.studycafe.asis;
+package cleancode.studycafe.me.studycafe;
 
-import cleancode.studycafe.asis.exception.AppException;
-import cleancode.studycafe.asis.io.InputHandler;
-import cleancode.studycafe.asis.io.OutputHandler;
-import cleancode.studycafe.asis.io.StudyCafeFileHandler;
-import cleancode.studycafe.asis.model.StudyCafeLockerPass;
-import cleancode.studycafe.asis.model.StudyCafePass;
-import cleancode.studycafe.asis.model.StudyCafePassType;
+import cleancode.studycafe.me.studycafe.exception.AppException;
+import cleancode.studycafe.me.studycafe.io.InputHandler;
+import cleancode.studycafe.me.studycafe.io.OutputHandler;
+import cleancode.studycafe.me.studycafe.io.StudyCafeFileHandler;
+import cleancode.studycafe.me.studycafe.model.StudyCafeLockerPass;
+import cleancode.studycafe.me.studycafe.model.StudyCafePass;
+import cleancode.studycafe.me.studycafe.model.StudyCafePassType;
+import cleancode.studycafe.me.studycafe.config.StudyCafeConfig;
 
 import java.util.List;
 
 public class StudyCafePassMachine {
 
-    private final InputHandler inputHandler = new InputHandler();
-    private final OutputHandler outputHandler = new OutputHandler();
+    private final InputHandler inputHandler;
+    private final OutputHandler outputHandler;
+
+    public StudyCafePassMachine(StudyCafeConfig config) {
+        this.inputHandler = config.getInputHandler();
+        this.outputHandler = config.getOutputHandler();
+    }
 
     public void run() {
         try {
@@ -22,7 +28,7 @@ public class StudyCafePassMachine {
 
             outputHandler.askPassTypeSelection();
             StudyCafePassType studyCafePassType = inputHandler.getPassTypeSelectingUserAction();
-
+            // TODO: 2024-10-09  
             if (studyCafePassType == StudyCafePassType.HOURLY) {
                 StudyCafeFileHandler studyCafeFileHandler = new StudyCafeFileHandler();
                 List<StudyCafePass> studyCafePasses = studyCafeFileHandler.readStudyCafePasses();
@@ -42,7 +48,7 @@ public class StudyCafePassMachine {
                 StudyCafePass selectedPass = inputHandler.getSelectPass(weeklyPasses);
                 outputHandler.showPassOrderSummary(selectedPass, null);
             } else if (studyCafePassType == StudyCafePassType.FIXED) {
-                StudyCafeFileHandler studyCafeFileHandler = new StudyCafeFileHandler();
+                 StudyCafeFileHandler studyCafeFileHandler = new StudyCafeFileHandler();
                 List<StudyCafePass> studyCafePasses = studyCafeFileHandler.readStudyCafePasses();
                 List<StudyCafePass> fixedPasses = studyCafePasses.stream()
                     .filter(studyCafePass -> studyCafePass.getPassType() == StudyCafePassType.FIXED)
