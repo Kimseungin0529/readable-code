@@ -1,4 +1,4 @@
-package cleancode.studycafe.me.model;
+package cleancode.studycafe.me;
 
 public class StudyCafeLockerPass {
 

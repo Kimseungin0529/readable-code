@@ -1,7 +1,7 @@
 package cleancode.studycafe.me.io;
 
-import cleancode.studycafe.asis.model.StudyCafePass;
-import cleancode.studycafe.asis.model.StudyCafePassType;
+import cleancode.studycafe.me.StudyCafePass;
+import cleancode.studycafe.me.StudyCafePassType;
 import cleancode.studycafe.me.exception.AppException;
 
 import java.util.List;
