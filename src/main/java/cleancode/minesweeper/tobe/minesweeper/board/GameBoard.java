@@ -9,7 +9,6 @@ import cleancode.minesweeper.tobe.minesweeper.gamelevel.GameLevel;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.List;
-import java.util.Stack;
 
 public class GameBoard {
 
@@ -47,7 +46,7 @@ public class GameBoard {
             return;
         }
 
-        openSurroundedCells2(cellPosition);
+        openSurroundedCells(cellPosition);
         checkIfGameIsOver();
     }
 
@@ -137,7 +136,7 @@ public class GameBoard {
         }
     }
 
-    private void openSurroundedCells2(CellPosition cellPosition) {
+    private void openSurroundedCells(CellPosition cellPosition) {
         Deque<CellPosition> deque = new ArrayDeque<>();
         deque.push(cellPosition);
 
