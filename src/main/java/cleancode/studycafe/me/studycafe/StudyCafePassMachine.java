@@ -34,11 +34,11 @@ public class StudyCafePassMachine {
 
             StudyCafePasses passes = studyCafeFileHandler.readStudyCafePasses(studyCafePassType1);
             outputHandler.showPassListForSelection(passes);
-            StudyCafePass selectedPass = inputHandler.getSelectPass(passes);
 
+            StudyCafePass selectedPass = inputHandler.getSelectPass(passes);
             StudyCafeOrder studyCafeOrder = StudyCafeOrder.of(selectedPass);
 
-            if(StudyCafePassType.isEqualFixedType(selectedPass.getPassType())){
+            if(StudyCafePassType.isEqualFixedTypeBy(selectedPass.getPassType())){
                 StudyCafeLockerPasses lockerPasses = studyCafeFileHandler.readLockerPasses();
                 StudyCafeLockerPass lockerPass = lockerPasses.findStudyCafeLockerPassBy(selectedPass);
 
