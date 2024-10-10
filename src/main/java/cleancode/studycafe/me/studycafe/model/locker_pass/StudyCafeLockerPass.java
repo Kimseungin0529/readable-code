@@ -1,21 +1,21 @@
-package cleancode.studycafe.me.studycafe.model;
+package cleancode.studycafe.me.studycafe.model.locker_pass;
 
-public class StudyCafePass {
+import cleancode.studycafe.me.studycafe.model.StudyCafePassType;
+
+public class StudyCafeLockerPass {
 
     private final StudyCafePassType passType;
     private final int duration;
     private final int price;
-    private final double discountRate;
 
-    private StudyCafePass(StudyCafePassType passType, int duration, int price, double discountRate) {
+    private StudyCafeLockerPass(StudyCafePassType passType, int duration, int price) {
         this.passType = passType;
         this.duration = duration;
         this.price = price;
-        this.discountRate = discountRate;
     }
 
-    public static StudyCafePass of(StudyCafePassType passType, int duration, int price, double discountRate) {
-        return new StudyCafePass(passType, duration, price, discountRate);
+    public static StudyCafeLockerPass of(StudyCafePassType passType, int duration, int price) {
+        return new StudyCafeLockerPass(passType, duration, price);
     }
 
     public StudyCafePassType getPassType() {
@@ -30,11 +30,8 @@ public class StudyCafePass {
         return price;
     }
 
-    public double getDiscountRate() {
-        return discountRate;
-    }
-
     public String display() {
+        // TODO: 2024-10-09  여러 if 문에 대해 고민해보기 -> 가독성은 괜찮은가? passType의 직접적인 변경이 일어나거나 개수에 대한 매우 큰 병동이 있다면?
         if (passType == StudyCafePassType.HOURLY) {
             return String.format("%s시간권 - %d원", duration, price);
         }

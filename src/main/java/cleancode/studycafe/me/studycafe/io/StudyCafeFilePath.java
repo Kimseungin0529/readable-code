@@ -7,7 +7,7 @@ import java.util.Arrays;
 public enum StudyCafeFilePath {
     PASS_HOURLY_LIST_PATH("시간 단위 파일 경로", StudyCafePassType.HOURLY, "src/main/resources/cleancode/studycafe/pass-list-hourly.csv"),
     PASS_WEEKLY_LIST_PATH("주 단위 파일 경로", StudyCafePassType.WEEKLY, "src/main/resources/cleancode/studycafe/pass-list-weekly.csv"),
-    PASS_FIXED_LIST_PATH("고정석 파일 경로", StudyCafePassType.FIXED, "src/main/resources/cleancode/studycafe/pass-list.fixed.csv"),
+    PASS_FIXED_LIST_PATH("고정석 파일 경로", StudyCafePassType.FIXED, "src/main/resources/cleancode/studycafe/pass-list-fixed.csv"),
     ;
 
     private final String description;

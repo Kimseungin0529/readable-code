@@ -1,8 +1,9 @@
 package cleancode.studycafe.me.studycafe.io;
 
-import cleancode.studycafe.me.studycafe.model.StudyCafePass;
+import cleancode.studycafe.me.studycafe.model.pass.StudyCafePass;
 import cleancode.studycafe.me.studycafe.model.StudyCafePassType;
 import cleancode.studycafe.me.studycafe.exception.AppException;
+import cleancode.studycafe.me.studycafe.model.pass.StudyCafePasses;
 
 import java.util.List;
 import java.util.Scanner;
@@ -26,10 +27,11 @@ public class InputHandler {
         throw new AppException("잘못된 입력입니다.");
     }
 
-    public StudyCafePass getSelectPass(List<StudyCafePass> passes) {
+    public StudyCafePass getSelectPass(StudyCafePasses passes) {
         String userInput = SCANNER.nextLine();
+        List<StudyCafePass> passList = passes.getStudyCafePassList();
         int selectedIndex = Integer.parseInt(userInput) - 1;
-        return passes.get(selectedIndex);
+        return passList.get(selectedIndex);
     }
 
     public boolean getLockerSelection() {

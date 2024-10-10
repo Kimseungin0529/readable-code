@@ -12,4 +12,8 @@ public enum StudyCafePassType {
         this.description = description;
     }
 
+    public static boolean isEqualFixedType(StudyCafePassType studyCafePassType){
+        return studyCafePassType == FIXED;
+    }
+
 }
