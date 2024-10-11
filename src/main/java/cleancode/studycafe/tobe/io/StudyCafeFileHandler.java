@@ -10,9 +10,10 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StudyCafeFileHandler {
+public class StudyCafeFileHandler implements PassReader{
 
-    public StudyCafePasses readStudyCafePasses() {
+    @Override
+    public StudyCafeSeatPasses readStudyCafePasses() {
         try {
             List<String> lines = Files.readAllLines(Paths.get("src/main/resources/cleancode/studycafe/pass-list.csv"));
             List<StudyCafeSeatPass> studyCafePasses = new ArrayList<>();
@@ -27,12 +28,12 @@ public class StudyCafeFileHandler {
                 studyCafePasses.add(studyCafePass);
             }
 
-            return StudyCafePasses.of(studyCafePasses);
+            return StudyCafeSeatPasses.of(studyCafePasses);
         } catch (IOException e) {
             throw new RuntimeException("파일을 읽는데 실패했습니다.", e);
         }
     }
-
+    @Override
     public StudyCafeLockerPasses readLockerPasses() {
         try {
             List<String> lines = Files.readAllLines(Paths.get("src/main/resources/cleancode/studycafe/locker.csv"));
