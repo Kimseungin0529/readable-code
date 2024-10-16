@@ -14,8 +14,15 @@ repositories {
 }
 
 dependencies {
+    // JUnit5 의존성
     testImplementation("org.junit.jupiter:junit-jupiter:5.10.2")
+
+    // AssertJ 의존성
     testImplementation("org.assertj:assertj-core:3.25.3")
+
+    // Mockito 의존성 (JUnit5 연동)
+    testImplementation("org.mockito:mockito-core:4.11.0")
+    testImplementation("org.mockito:mockito-junit-jupiter:4.11.0")
 }
 
 tasks.named('test') {
